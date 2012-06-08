@@ -26,7 +26,7 @@ h1,h2,h3,h4 {
     font-family:"essays1743";
 }
 
-p {
+p,li {
     font-family:"urani";
     width: 70%;
     font-size: 14pt;
