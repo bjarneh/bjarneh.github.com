@@ -1,14 +1,16 @@
 
 function checkForDarkMode(){
 
-    var darktheme = false;
+    var darktheme = 'yes';
 
     var c = getCookieMap();
     if( c.hasOwnProperty('darktheme') ){
         darktheme = c['darktheme'];
+    }else{
+        c.add('darktheme', 'no');
     }
 
-    if(darktheme){
+    if(darktheme === 'yes'){
         $("body").css({'background-color': '#151515', 'color': '#ddd' });
         $("#darklight").prop('checked', true);
     }
@@ -22,10 +24,10 @@ function toggleDarkMode(){
 
     if($("#darklight").is(':checked')){
         $("body").css({'background-color': '#151515', 'color': '#ddd' });
-        c.add('darktheme', true);
+        c.add('darktheme', 'yes');
     }else{
         $("body").css({'background-color': '#fffff8', 'color': '#111' });
-        c.add('darktheme', false);
+        c.add('darktheme', 'no');
     }
 
 }
