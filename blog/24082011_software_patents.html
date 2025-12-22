@@ -6,9 +6,20 @@
           Software Patents
       </title>
       <link rel="stylesheet" type="text/css" href="../css/tufte.css" /> 
+      <link rel="stylesheet" type="text/css" href="../css/addons.css" /> 
+      <link rel="stylesheet" type="text/css" href="../css/checkboxslider.css" /> 
+      <script src="../js/jquery-1.10.2.min.js" type="text/javascript"></script>
+      <script src="../js/cookiemap.js" type="text/javascript"></script>
+      <script src="../js/main.js" type="text/javascript"></script>
       <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
+   <div id='darktoggle'>
+       <label class="switch">
+           <input id='darklight' name='darklight' type="checkbox">
+           <span class="slider round"></span>
+       </label>
+   </div>
     <article>
       <h1 id='software_patents'>Software Patents </h1>
       <section>
@@ -82,5 +93,16 @@
         </p>
       </section>
    <article>
+   <script type='text/javascript'>
+
+    $(document).ready(function(){
+        checkForDarkMode();
+    
+        $('#darklight').on('change', function(ev){
+            toggleDarkMode();
+        });
+    });
+
+   </script>
   <body>
 </html>
