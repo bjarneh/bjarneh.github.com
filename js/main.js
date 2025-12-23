@@ -1,7 +1,7 @@
 
 function checkForDarkMode(){
 
-    var darktheme = 'yes';
+    var darktheme = 'no';
 
     var c = getCookieMap();
     if( c.hasOwnProperty('darktheme') ){

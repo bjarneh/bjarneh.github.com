@@ -6,6 +6,18 @@ span.px16padding0700 {
 
 div#darktoggle {
     position: fixed;
-    left: 10px;
+    right: 10px;
     top: 10px;
+}
+
+a#homelink {
+    position: fixed;
+    left: 11px;
+    top: 3px;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+a#homelink:hover {
+    text-decoration: underline;
 }
