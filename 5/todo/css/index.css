@@ -1,0 +1,80 @@
+.righty {
+    float: right;
+    margin-left: 3px;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+.floater {
+    position: fixed;
+    z-index: 100;
+    background: cyan;
+    color: black;
+    display: none;
+    font-size: 14px;
+    padding:3px;
+    font-size: 15px;
+    font-family: serif;
+}
+
+.cards {
+    padding-top: 2vh;
+    width: calc(100vw - 30px);
+    margin: 0 auto;
+    display: grid;
+    gap: 0.83rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+body{
+    background: #fffff8;
+}
+
+.card {
+    padding: 4px;
+    border: 1px solid lightgrey;
+    height: calc(100vh - 75px);
+    background: #ffffff;
+    border-radius: 2px;
+    overflow: auto;
+}
+
+.card ul {
+    list-style: none;
+    padding: 10px 0 0 10px;
+}
+
+.card ul li {
+    padding-bottom: 2px;
+}
+
+.card input[type=text] {
+    width: 88%;
+    border: 0px; /* 1px solid lightgrey;*/
+    font-size: 15px;
+    font-family: serif;
+}
+
+#donetbl th {
+    font-weight: normal;
+}
+#donetbl td {
+    font-size: 15px;
+    font-family: serif;
+}
+
+#donetbl td:nth-child(2){
+    text-align: right;
+}
+#donetbl td:nth-child(3){
+    text-align: left;
+}
+#donetbl td:nth-child(2),
+#donetbl td:nth-child(3){
+    color: #444444;
+}
+#donetbl td:nth-child(4){
+    padding-left: 5px;
+}
