@@ -163,7 +163,7 @@ function uncompleteTask(){
 
     floater.text(desc)
            .css({'top': pos.top, 'left': pos.left,
-                 'width': done.width()})
+                 'width': $("#done").width() - 100})
            .show();
 
     setTimeout(function(){
