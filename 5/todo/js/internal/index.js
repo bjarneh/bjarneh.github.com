@@ -1,3 +1,14 @@
+function keyPressTask(ev){
+    if(ev.key === 'Enter'){
+        var that = this;
+        var li = $(this.parentNode);
+        if( li.index()+1 == li.parent().children().length ){
+            createNew();
+            li.parent().last().find('input[type=text]').focus();
+        }
+    }
+}
+
 
 function createNew(){
     var epoc = Date.now();
