@@ -20,6 +20,15 @@ function createNew(){
 }
 
 
+function addTodoTask(idn, desc){
+    var node = `<li>
+                  <input type='checkbox' id='check_${idn}' />
+                  <input id='todo_${idn}' type='text' placeholder='Type a new task here…' value="${desc}" />
+                </li>`;
+    $("#tasks").append(node);
+}
+
+
 function showFirstColumns(){
     $("#done").hide();
     $("#todo").show()
@@ -88,8 +97,27 @@ function addDoneTaskToTable(idn, desc){
                </tr>`;
 
     $("#donetbody").prepend( row );
-
 }
+
+
+function addStoredDoneTaskToTable(sinceEpoc, now, desc){
+
+    const delta = now - sinceEpoc;
+    const fmt = fmtDelta( delta );
+
+    var row = `<tr>
+                   <td>
+                       <input type='checkbox' id='check_${sinceEpoc}' checked/>
+                   </td>
+                   <td>${fmt['used']}</td>
+                   <td>${fmt['unit']}</td>
+                   <td id="done_${sinceEpoc}">${desc}</td>
+               </tr>`;
+
+    $("#donetbody").prepend( row );
+}
+
+
 
 function whiteOrNada(s){
     if(s){
@@ -142,7 +170,13 @@ function completeTask(){
         that.parent().remove();
     }, 350);
 
-    // TODO move from task_xxx to done_xxx in localStorage
+    // TODO move from task.todo:xxx to task.done:xxx in localStorage
+
+    if( saveTask ){
+        window.localStorage.removeItem(`task.todo:${idn}`);
+        var epocText = `${Date.now()}:${textbox.val()}`;
+        window.localStorage.setItem(`task.done:${idn}`, epocText);
+    }
 }
 
 
@@ -154,9 +188,9 @@ function uncompleteTask(){
     var done = $("#done_" + idn);
     var desc = done.text();
     var node = $(`<li>
-                  <input type='checkbox' id='check_${idn}' />
-                  <input id='todo_${idn}' type='text' placeholder='Type a new task here…' value="${desc}" />
-                </li>`);
+                    <input type='checkbox' id='check_${idn}' />
+                    <input id='todo_${idn}' type='text' placeholder='Type a new task here…' value="${desc}" />
+                  </li>`);
 
     var todo = $("#tasks");
     var todopos = todo.offset();
@@ -189,23 +223,59 @@ function uncompleteTask(){
         that.parent().parent().remove();
     }, 350);
 
-    // TODO move from done_xxx to task_xxx in localStorage
+
+    window.localStorage.removeItem(`task.done:${idn}`);
+    window.localStorage.setItem(`task.todo:${idn}`, desc);
+
 }
 
 
 
-function updateInsert(key, value){
+function removeStorageKey(key){
     if(storageAvailable('localStorage')){
-        window.localStorage.setItem(key, value)
     }else{
-        console.log("Cannot store state, no localStorage available");
+        console.log("Cannot remove key, no localStorage available");
     }
 }
 
 
 function storeTask(ev){
     var key = 'task.todo:' + this.id.substring(5)
-    updateInsert(key, this.value);
+    window.localStorage.setItem(key, this.value);
+}
+
+
+function loadStoredTasks(){
+
+    if(storageAvailable('localStorage')){
+
+        for(var i = 0; i < window.localStorage.length; i++){
+            var key = localStorage.key(i);
+            if(key.startsWith("task.todo:")){
+
+                var idn = key.substring(10);
+                var txt = localStorage.getItem(key);
+                addTodoTask(idn, txt);
+
+            }else if(key.startsWith("task.done:")){
+
+                var idn = key.substring(10);
+                var txt = localStorage.getItem(key);
+                var pur = txt.substring(14);
+                var end = txt.substring(0, 13);
+
+                console.log(`${idn} => ${txt} => ${pur} => ${end}`);
+
+                addStoredDoneTaskToTable(parseInt(idn), parseInt(end), pur);
+            }
+        }
+
+    }else{
+
+        console.log("Cannot restore state, no localStorage available");
+
+    }
+
 }
 
 
