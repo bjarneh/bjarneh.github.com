@@ -99,6 +99,7 @@ function whiteOrNada(s){
 }
 
 
+
 // Move task over to table of completed tasks
 function completeTask(){
 
@@ -141,6 +142,7 @@ function completeTask(){
         that.parent().remove();
     }, 350);
 
+    // TODO move from task_xxx to done_xxx in localStorage
 }
 
 
@@ -187,11 +189,46 @@ function uncompleteTask(){
         that.parent().parent().remove();
     }, 350);
 
+    // TODO move from done_xxx to task_xxx in localStorage
 }
 
 
 
+function updateInsert(key, value){
+    if(storageAvailable('localStorage')){
+        window.localStorage.setItem(key, value)
+    }else{
+        console.log("Cannot store state, no localStorage available");
+    }
+}
 
+
+function storeTask(ev){
+    var key = 'task.todo:' + this.id.substring(5)
+    updateInsert(key, this.value);
+}
+
+
+// 
+// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+function storageAvailable(type) {
+  let storage;
+  try {
+    storage = window[type];
+    const x = "__storage_test__";
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return (
+      e instanceof DOMException &&
+      e.name === "QuotaExceededError" &&
+      // acknowledge QuotaExceededError only if there's something already stored
+      storage &&
+      storage.length !== 0
+    );
+  }
+}
 
 
 // @Deprecated
