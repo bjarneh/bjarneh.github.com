@@ -100,12 +100,13 @@ body{
     }
     .floater {
         font-size: var(--mobile-font-size);
+        min-height: var(--mobile-font-size);
     }
     button {
         font-size: var(--mobile-font-size);
         padding: 10px 15px 10px 15px;
     }
-    button svg {
+    svg {
         height: var(--mobile-font-size);
     }
     .cards {
@@ -130,6 +131,7 @@ body{
     }
     .floater {
         font-size: var(--desktop-font-size);
+        min-height: var(--desktop-font-size);
     }
     button {
         font-size: var(--desktop-font-size);

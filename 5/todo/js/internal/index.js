@@ -11,19 +11,14 @@ function keyPressTask(ev){
 
 
 function createNew(){
-    var epoc = Date.now();
-    var node = `<li>
-                  <input type='checkbox' id='check_${epoc}' />
-                  <input id='todo_${epoc}' type='text' placeholder='Type a new task here…' />
-                </li>`;
-    $("#tasks").append(node);
+    addTodoTask(Date.now(), '');
 }
 
 
-function addTodoTask(idn, desc){
+function addTodoTask(sinceEpoc, desc){
     var node = `<li>
-                  <input type='checkbox' id='check_${idn}' />
-                  <input id='todo_${idn}' type='text' placeholder='Type a new task here…' value="${desc}" />
+                  <input type='checkbox' id='check_${sinceEpoc}' />
+                  <input id='todo_${sinceEpoc}' type='text' placeholder='Type a new task here…' value="${desc}" />
                 </li>`;
     $("#tasks").append(node);
 }
@@ -100,9 +95,9 @@ function addDoneTaskToTable(idn, desc){
 }
 
 
-function addStoredDoneTaskToTable(sinceEpoc, now, desc){
+function addStoredDoneTaskToTable(sinceEpoc, completedAt, desc){
 
-    const delta = now - sinceEpoc;
+    const delta = completedAt - sinceEpoc;
     const fmt = fmtDelta( delta );
 
     var row = `<tr>
@@ -231,14 +226,6 @@ function uncompleteTask(){
 
 
 
-function removeStorageKey(key){
-    if(storageAvailable('localStorage')){
-    }else{
-        console.log("Cannot remove key, no localStorage available");
-    }
-}
-
-
 function storeTask(ev){
     var key = 'task.todo:' + this.id.substring(5)
     window.localStorage.setItem(key, this.value);
@@ -249,13 +236,25 @@ function loadStoredTasks(){
 
     if(storageAvailable('localStorage')){
 
+        var todos = [];
+        var dones = [];
+
         for(var i = 0; i < window.localStorage.length; i++){
+
             var key = localStorage.key(i);
+
             if(key.startsWith("task.todo:")){
+
 
                 var idn = key.substring(10);
                 var txt = localStorage.getItem(key);
-                addTodoTask(idn, txt);
+
+                todos.push({
+                    'sinceEpoc': parseInt(idn),
+                    'desc': txt
+                });
+
+                //addTodoTask(idn, txt);
 
             }else if(key.startsWith("task.done:")){
 
@@ -264,9 +263,28 @@ function loadStoredTasks(){
                 var pur = txt.substring(14);
                 var end = txt.substring(0, 13);
 
-                console.log(`${idn} => ${txt} => ${pur} => ${end}`);
+                //console.log(`${idn} => ${txt} => ${pur} => ${end}`);
 
-                addStoredDoneTaskToTable(parseInt(idn), parseInt(end), pur);
+                dones.push({
+                    'sinceEpoc': parseInt(idn),
+                    'completedAt': parseInt(end),
+                    'desc': pur
+                });
+
+                //addStoredDoneTaskToTable(parseInt(idn), parseInt(end), pur);
+            }
+        }
+
+        if( dones.length > 0 ){
+            dones.sort((a,b) => a.completedAt - b.completedAt);
+            for(const done of dones){
+                addStoredDoneTaskToTable(done.sinceEpoc, done.completedAt, done.desc);
+            }
+        }
+        if( todos.length > 0 ){
+            todos.sort((a,b) => a.sinceEpoc - b.sinceEpoc);
+            for(const todo of todos){
+                addTodoTask(todo.sinceEpoc, todo.desc);
             }
         }
 
