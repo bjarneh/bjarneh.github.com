@@ -1,3 +1,10 @@
+:root {
+  --mobile-width: 1000px;
+  --mobile-font-size: 40px;
+  --desktop-font-size: 15px;
+}
+
+
 .righty {
     float: right;
     margin-left: 5px;
@@ -81,7 +88,7 @@ body{
 
 @media (max-width: 1000px) {
     input[type=text] {
-        font-size: 40px;
+        font-size: var(--mobile-font-size);
     }
     input[type=checkbox] {
         width: 32px;
@@ -89,17 +96,17 @@ body{
     }
     #donetbl td,
     #donetbl th {
-        font-size: 40px;
+        font-size: var(--mobile-font-size);
     }
     .floater {
-        font-size: 40px;
+        font-size: var(--mobile-font-size);
     }
     button {
-        font-size: 40px;
+        font-size: var(--mobile-font-size);
         padding: 10px 15px 10px 15px;
     }
     button svg {
-        height: 40px;
+        height: var(--mobile-font-size);
     }
     .cards {
         grid-template-columns: repeat(1, 1fr);
@@ -111,7 +118,7 @@ body{
 
 @media (min-width: 1000px) {
     input[type=text] {
-        font-size: 15px;
+        font-size: var(--desktop-font-size);
     }
     input[type=checkbox] {
         width: 12px;
@@ -119,15 +126,15 @@ body{
     }
     #donetbl td,
     #donetbl th {
-        font-size: 15px;
+        font-size: var(--desktop-font-size);
     }
     .floater {
-        font-size: 15px;
+        font-size: var(--desktop-font-size);
     }
     button {
-        font-size: 15px;
+        font-size: var(--desktop-font-size);
     }
     button>svg {
-        height: 15px;
+        height: var(--desktop-font-size);
     }
 }
