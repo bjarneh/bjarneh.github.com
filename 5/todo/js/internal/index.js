@@ -1,3 +1,69 @@
+function loadGetTasks(){
+    var url = new URL(location);
+    params = url.searchParams;
+    var todoRegex = /^tt_[0-9]{13}$/;
+    var doneRegex = /^td_[0-9]{13}_[0-9]{13}$/;
+    for (const [k, v] of params) {
+        var isTodo = !!k.match(todoRegex);
+        var isDone = !!k.match(doneRegex);
+        //console.log(`${k}: ${v} : isTodo: ${isTodo}, isDone: ${isDone}`);
+        if(isTodo){
+            var idn = k.substring(3);
+            var key = 'task.todo:' + k.substring(3)
+            window.localStorage.setItem(key, v);
+        }else if(isDone){
+            var tokens = k.split("_");
+            var key = 'task.done:' + tokens[1];
+            var elm = tokens[2] +':'+ v;
+            window.localStorage.setItem(key, elm);
+        }
+    }
+}
+
+function clearLink(){
+    var url = new URL(location);
+    url.search = '';
+    history.pushState({}, "whatever", url.href);
+}
+
+
+function updateLink(ev){
+
+    if( ev.altKey || ev.shiftKey || ev.ctrlKey ){
+        clearLink();
+        return;
+    }
+
+    var url = new URL(location);
+    url.search = '';
+
+    params = url.searchParams;
+
+    if(storageAvailable('localStorage')){
+
+        for(var i = 0; i < window.localStorage.length; i++){
+
+            var key = localStorage.key(i);
+
+            if(key.startsWith("task.todo:")){
+                var idn = key.substring(10);
+                var txt = localStorage.getItem(key);
+                params.set(`tt_${idn}`, txt);
+
+            }else if(key.startsWith("task.done:")){
+
+                var idn = key.substring(10);
+                var txt = localStorage.getItem(key);
+                var pur = txt.substring(14);
+                var end = txt.substring(0, 13);
+                params.set(`td_${idn}_${end}`, pur);
+            }
+        }
+        history.pushState({}, "whatever", url.href);
+    }
+}
+
+
 function keyPressTask(ev){
     if(ev.key === 'Enter'){
         var that = this;

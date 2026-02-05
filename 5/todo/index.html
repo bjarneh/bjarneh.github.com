@@ -11,6 +11,7 @@
     <body>
 
     <button id='new'> New </button>
+    <button id='link' title='Create GET parameters of all tasks (URL can be moved to another computer) hold Ctrl/Shift/Alt to clear'>🔗</button>
 
     <button id='toggle' class='righty' style='display:none'
             title='Toggle visibilty of completed/current tasks'>
@@ -67,12 +68,14 @@
     <script type='text/javascript'>
     $(document).ready(function(){
 
+        loadGetTasks();
         loadStoredTasks();
 
         $("#leftvisible").on('click', showFirstColumns);
         $("#rightvisible").on('click', showSecondColumns);
         $("#bothvisible").on('click', showBothColumns);
         $("#new").on('click', createNew);
+        $("#link").on('click', updateLink);
 
         // Depricated
         $("#toggle").on('click', toggleVisibleColumns);

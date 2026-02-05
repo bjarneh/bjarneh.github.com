@@ -26,7 +26,7 @@
 }
 
 .cards {
-    padding-top: 2vh;
+    padding-top: 1vh;
     width: calc(100vw - 30px);
     margin: 0 auto;
     display: grid;
@@ -41,7 +41,7 @@ body{
 .card {
     padding: 4px;
     border: 1px solid lightgrey;
-    height: calc(100vh - 75px);
+    height: calc(100vh - 35px);
     background: #ffffff;
     border-radius: 2px;
     overflow: auto;
@@ -139,4 +139,12 @@ body{
     button>svg {
         height: var(--desktop-font-size);
     }
+}
+
+#new {
+    margin-left: 4px;
+}
+
+#rightvisible {
+    margin-right: 4px;
 }
