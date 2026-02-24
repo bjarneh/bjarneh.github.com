@@ -119,6 +119,11 @@ body{
     .cards {
         grid-template-columns: repeat(1, 1fr);
     }
+
+    .card {
+        height: calc(100vh - 120px);
+    }
+
     #done {
         display: none;
     }
