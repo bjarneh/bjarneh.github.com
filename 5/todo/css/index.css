@@ -27,7 +27,7 @@
 
 .cards {
     padding-top: 1vh;
-    width: calc(100vw - 30px);
+    width: calc(100% - 20px);
     margin: 0 auto;
     display: grid;
     gap: 0.83rem;
@@ -41,7 +41,7 @@ body{
 .card {
     padding: 4px;
     border: 1px solid lightgrey;
-    height: calc(100vh - 35px);
+    height: calc(99vh - 60px);
     background: #ffffff;
     border-radius: 2px;
     overflow: auto;
@@ -62,10 +62,17 @@ body{
     font-family: serif;
 }
 
+#donetbl thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #fffeff;
+}
 
 #donetbl th {
     font-weight: normal;
 }
+
 #donetbl td {
     font-family: serif;
 }
