@@ -21,3 +21,14 @@ a#homelink {
 a#homelink:hover {
     text-decoration: underline;
 }
+
+ul.nopoint,
+ol.nopoint {
+    list-style: none;
+}
+
+span.smallgrey {
+    font-size: 14px;
+    color: grey;
+    font-family: monospace;
+}
